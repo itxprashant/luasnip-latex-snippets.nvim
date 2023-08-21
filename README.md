@@ -15,18 +15,18 @@ Depends on [vimtex](https://github.com/lervag/vimtex) to determine if the
 cursor is within math mode. Alternatively, you can use
 [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) (experimental) by passing `{ use_treesitter = true }` to the setup call.
 
-Can be installed like any neovim plugin. If using
-[wbthomason/packer.nvim](https://github.com/wbthomason/packer.nvim):
+Can be installed like any neovim plugin. If using lazy.nvim: 
 
 ```lua
-use {
+{
   "iurimateus/luasnip-latex-snippets.nvim",
   -- vimtex isn't required if using treesitter
-  requires = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
+  dependencies = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
   config = function()
     require'luasnip-latex-snippets'.setup()
     -- or setup({ use_treesitter = true })
   end,
+  ft = {"tex", "markdown"},
 }
 ```
 
