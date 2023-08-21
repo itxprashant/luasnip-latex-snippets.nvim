@@ -37,12 +37,10 @@ local _autosnippets = function(is_math, not_math)
   local autosnippets = {}
 
   for _, s in ipairs({
-    "math_wRA_no_backslash",
     "math_rA_no_backslash",
-    "math_wA_no_backslash",
-    "math_iA_no_backslash",
     "math_iA",
     "math_wrA",
+    "chemistry_iA"
   }) do
     vim.list_extend(
       autosnippets,
@@ -79,8 +77,13 @@ M.setup_tex = function(is_math, not_math)
   })
 
   local math_i = require("luasnip-latex-snippets/math_i").retrieve(is_math)
-
   ls.add_snippets("tex", math_i, { default_priority = 0 })
+
+  local chemistry_i = require("luasnip-latex-snippets/chemistry_i").retrieve(is_math)
+  ls.add_snippets("tex", chemistry_i, { default_priority = 0 })
+
+
+
 
   ls.add_snippets("tex", _autosnippets(is_math, not_math), {
     type = "autosnippets",
@@ -118,7 +121,7 @@ M.setup_markdown = function()
 
   -- tex delimiters
   local normal_wA_tex = {
-    parse_snippet({ trig = "mk", name = "Math" }, "$${1:${TM_SELECTED_TEXT}}$"),
+    parse_snippet({ trig = "fm", name = "Math" }, "$${1:${TM_SELECTED_TEXT}}$"),
     parse_snippet({ trig = "dm", name = "Block Math" }, "$$\n\t${1:${TM_SELECTED_TEXT}}\n.$$"),
   }
   vim.list_extend(filtered, normal_wA_tex)
