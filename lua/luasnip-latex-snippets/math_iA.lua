@@ -14,7 +14,7 @@ function M.retrieve(is_math)
 
   local decorator = {
     wordTrig = false,
-    condition = pipe({ is_math, no_backslash }),
+    condition = pipe({ is_math }),
   }
 
   local parse_snippet = ls.extend_decorator.apply(ls.parser.parse_snippet, decorator) --[[@as function]]
@@ -265,7 +265,7 @@ return {
   s({ trig = "\\?exp", name = "exp", regTrig = true }, t("\\exp")),
   s({ trig = "\\?star", name = "star", regTrig = true }, t("\\star")),
   s({ trig = "\\?perp", name = "perp", regTrig = true }, t("\\perp")),
-  s({ trig = "\\?int", name = "int", regTrig = true }, t("\\subset")),
+  s({ trig = "\\?int", name = "int", regTrig = true }, t("\\int")),
   s({ trig = "\\?subset", name = "subset", regTrig = true }, t("\\subset")),
 
 
