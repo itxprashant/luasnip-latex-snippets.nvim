@@ -1,6 +1,13 @@
 local ls = require("luasnip")
 local utils = require("luasnip-latex-snippets.util.utils")
 local pipe = utils.pipe
+local s = ls.snippet
+local f = ls.function_node
+local t = ls.text_node
+local i = ls.insert_node
+local c = ls.choice_node
+local fmta = require("luasnip.extras.fmt").fmta
+local with_priority = require("luasnip-latex-snippets.util.utils").with_priority
 
 local M = {}
 
@@ -39,6 +46,7 @@ function M.retrieve(not_math)
     { trig = "table1", name = "Table 1" },
     "\\begin{center}\n\\begin{tabular}{${1:|c|c|}}\n\\hline\n$2 \\\\ \n\\hline\n$3\n\n\\hline\n\\end{tabular}\n\\end{center}"
   ),
+  s({trig = "mkc", name = "Makecell"}, fmta("\\makecell{<>}", {i(1)})),
   }
 end
 
