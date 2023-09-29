@@ -40,6 +40,9 @@ return {
   s({ trig = "([A-Za-ce-z\\]+)(d+)ot", wordTrig = false, regTrig = true, name = "dot", priority = 100, },
     f(function(_, snip) return string.format("\\%sot{%s}", snip.captures[2], snip.captures[1]) end, {})),
 
+  s({ trig = "\\?(o?)(i-)nt", wordTrig = false, regTrig = true, name = "dot", priority = 1000, },
+    f(function(_, snip) return string.format("\\%s%snt", snip.captures[1], snip.captures[2]) end, {})),
+    
   s(
     {
       trig = "dif_?([0-9]?)([a-zA-Z])([a-zA-Z])",
@@ -234,8 +237,8 @@ return {
   s({ trig = "==", name = "equals" }, fmta("&= <> \\\\", { i(1) })),
   s({ trig = "!=", name = "not equals" }, t("\\neq ")),
   s({ trig = "__", name = "subscript" }, fmta("_{<>}", { i(1) })),
-  s({ trig = "=>", name = "implies" }, t("\\implies")),
-  s({ trig = "=<", name = "implied by" }, t("\\impliedby")),
+  s({ trig = "=>", name = "implies" }, t("\\implies ")),
+  s({ trig = "=<", name = "implied by" }, t("\\impliedby ")),
   s({ trig = "<<", name = "<<" }, t("\\ll")),
   s({ trig = "<=", name = "leq" }, t("\\leq ")),
   s({ trig = ">=", name = "geq" }, t("\\geq ")),
@@ -265,7 +268,6 @@ return {
   s({ trig = "\\?exp", name = "exp", regTrig = true }, t("\\exp")),
   s({ trig = "\\?star", name = "star", regTrig = true }, t("\\star")),
   s({ trig = "\\?perp", name = "perp", regTrig = true }, t("\\perp")),
-  s({ trig = "\\?int", name = "int", regTrig = true }, t("\\int")),
   s({ trig = "\\?subset", name = "subset", regTrig = true }, t("\\subset")),
 
 
