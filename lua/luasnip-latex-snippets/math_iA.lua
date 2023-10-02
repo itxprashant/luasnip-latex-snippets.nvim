@@ -170,12 +170,10 @@ return {
     { f(function(_, snip) return string.format("\\hat{%s}", snip.captures[1]) end, {}), }),
 
   s({ trig = "bf", name = "boldface", priority = 100 }, fmta("\\mathbf{<>}<>", { i(1), i(2) })),
-
   s({ trig = "([a-zA-Z])bf", name = "boldface vector", regTrig = true, wordTrig = false, priority = 200, },
     f(function(_, snip) return string.format("\\mathbf{%s}", snip.captures[1]) end)),
 
   s({ trig = "rm", name = "mathrm", priority = 100 }, fmta("\\mathrm{<>}<>", { i(1), i(2) })),
-
   s({ trig = "([a-zA-Z])rm", name = "mathrm", regTrig = true, wordTrig = false, priority = 200 },
     f(function(_, snip) return string.format("\\mathrm{%s}", snip.captures[1]) end)),
 
@@ -207,7 +205,7 @@ return {
   s({ trig = "too", name = "to" }, t("\\to ")),
   s({ trig = "ncr", name = "comb" }, fmta("{}^{<>}C_{<>}<> ", { i(1, "n"), i(2, "r"), i(3) })),
   s({ trig = "npr", name = "perm" }, fmta("{}^{<>}P_{<>}<> ", { i(1, "n"), i(2, "r"), i(3) })),
-  s({ trig = "4pep", name = "coulomb's constant" }, t("\\frac{1}{4\\pi\\epsilon_0}")),
+  s({ trig = "4pep", name = "coulomb's constant" }, t("\\frac{1}{4\\pi\\epsilon_0} ")),
   s({ trig = "letw", name = "let omega" }, t("Let \\Omega \\subset \\C be open.")),
   s({ trig = "nnn", name = "bigcap" }, fmta("\\bigcap_{<> \\in <>} ", { i(1, "i"), i(2, "I") })),
   s({ trig = "norm", name = "norm" }, fmta("\\|<>\\|", { i(1) })),
@@ -245,7 +243,7 @@ return {
   s({ trig = ">>", name = ">>" }, t("\\gg")),
   s({ trig = "<<", name = "<<" }, t("\\ll")),
   s({ trig = "compl", name = "complement" }, t("^{c}")),
-  s({ trig = "invs", name = "inverse" }, t("^{-1}")),
+  s({ trig = "inv", name = "inverse" }, t("^{-1}")),
   s({ trig = "~~", name = "~" }, t("\\approx ")),
   s({ trig = "conj", name = "conjugate" }, fmta("\\overline{<>}", { i(1) })),
   s({ trig = "prop", name = "proportional" }, t("\\propto")),
@@ -255,6 +253,7 @@ return {
   s({ trig = "inn", name = "in" }, t("\\in")),
   s({ trig = "nin", name = "not in" }, t("\\notin")),
   s({ trig = "SI", name = "SI" }, fmta("\\SI{<>}{<>}", { i(1), i(2) })),
+  s({ trig = "det", name = "\\det"}, t("\\det ")),
 
   -- postfix
   s({ trig = "\\?sin", name = "sin", regTrig = true }, t("\\sin")),
