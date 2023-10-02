@@ -1,7 +1,6 @@
 local M = {}
 
 local ls = require("luasnip")
-local s = ls.snippet
 local f = ls.function_node
 local t = ls.text_node
 local i = ls.insert_node
@@ -13,11 +12,9 @@ local utils = require("luasnip-latex-snippets.util.utils")
 local pipe = utils.pipe
 
 function M.retrieve(is_math)
-  local parse_snippet = ls.extend_decorator.apply(ls.parser.parse_snippet, {
-    wordTrig = false,
-    condition = pipe({ is_math }),
-    show_condition = is_math,
-  }) --[[@as function]]
+  local parse_snippet = ls.extend_decorator.apply(ls.parser.parse_snippet, { wordTrig = false, condition = pipe({ is_math }), show_condition = is_math,}) --[[@as function]]
+  local s = ls.extend_decorator.apply(ls.snippet, { condition = pipe({ is_math }), show_condition = is_math, wordTrig = false }) --[[@as function]]
+
 
   return {
 
@@ -58,11 +55,11 @@ function M.retrieve(is_math)
 
 
   -- Enlarged Brackets ---------------------------------------------------------------------------------------------------
-  ls.parser.parse_snippet({ trig = "rlr", name = "left( right)" }, "\\left( ${1:${TM_SELECTED_TEXT}} \\right) $0"),
-  ls.parser.parse_snippet({ trig = "lr|", name = "left| right|" }, "\\left| ${1:${TM_SELECTED_TEXT}} \\right| $0"),
-  ls.parser.parse_snippet({ trig = "clr", name = "left{ right}" }, "\\left\\{ ${1:${TM_SELECTED_TEXT}} \\right\\\\} $0"),
-  ls.parser.parse_snippet({ trig = "slr", name = "left[ right]" }, "\\left[ ${1:${TM_SELECTED_TEXT}} \\right] $0"),
-  ls.parser.parse_snippet({ trig = "lra", name = "leftangle rightangle" }, "\\left< ${1:${TM_SELECTED_TEXT}} \\right>$0"),
+  parse_snippet({ trig = "rlr", name = "left( right)" }, "\\left( ${1:${TM_SELECTED_TEXT}} \\right) $0"),
+  parse_snippet({ trig = "lr|", name = "left| right|" }, "\\left| ${1:${TM_SELECTED_TEXT}} \\right| $0"),
+  parse_snippet({ trig = "clr", name = "left{ right}" }, "\\left\\{ ${1:${TM_SELECTED_TEXT}} \\right\\\\} $0"),
+  parse_snippet({ trig = "slr", name = "left[ right]" }, "\\left[ ${1:${TM_SELECTED_TEXT}} \\right] $0"),
+  parse_snippet({ trig = "lra", name = "leftangle rightangle" }, "\\left< ${1:${TM_SELECTED_TEXT}} \\right>$0"),
 
   }
 end
