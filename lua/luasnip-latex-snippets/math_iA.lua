@@ -177,6 +177,8 @@ return {
   s({ trig = "([a-zA-Z])rm", name = "mathrm", regTrig = true, wordTrig = false, priority = 200 },
     f(function(_, snip) return string.format("\\mathrm{%s}", snip.captures[1]) end)),
 
+  s({ trig = "ubr", name = "underbrace", priority = 100}, fmta("\\underbrace{<>}_{<>}", {i(1), i(2)})),
+
   s({ trig = "td", name = "to the ... power ^{}" }, fmta("^{<>}", { i(1) })),
   s({ trig = "rd", name = "to the ... subscript _{}" }, fmta("_{<>}", { i(1) })),
   s({ trig = "cb", name = "Cube ^3" }, t("^3")),
@@ -252,6 +254,9 @@ return {
   s({ trig = "inf", name = "\\infty" }, t("\\infty")),
   s({ trig = "inn", name = "in" }, t("\\in")),
   s({ trig = "nin", name = "not in" }, t("\\notin")),
+  s({ trig = "neq", name = "not equal to" }, t("\\neq ")),
+  s({ trig = "pm", name = "plus-minus" }, t("\\pm ")),
+  s({ trig = "mp", name = "minus-plus" }, t("\\mp ")),
   s({ trig = "SI", name = "SI" }, fmta("\\SI{<>}{<>}", { i(1), i(2) })),
   s({ trig = "det", name = "\\det"}, t("\\det ")),
 

@@ -27,6 +27,7 @@ return {
 s({trig = "ce", name = "Chemical Equation"}, fmta( "\\ce{<>}", { i(1) } ) ),
 s({trig = "cre", name = "Chemical Reaction"}, fmta( "\\ce{<> ->>[<>][<>] <>}", { i(1), i(2), i(3), i(4) } ) ),
 s({trig = "eqa", name = "Equilirium arrow"}, t("<=> ") ),
+s({trig = "cubr", name = "Chemistry Underbrace", priority = 200}, fmta("$\\underbrace{\\ce{<>}}_{\\text{<>}}$", {i(1), i(2)})),
 s({trig = "R'", name = "r dash"}, t("\\text{R'}")),
 
 -- Organic Chemistry
