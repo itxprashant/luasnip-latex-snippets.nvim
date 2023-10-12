@@ -82,6 +82,8 @@ M.setup_tex = function(is_math, not_math)
   local chemistry_i = require("luasnip-latex-snippets/chemistry_i").retrieve(is_math)
   ls.add_snippets("tex", chemistry_i, { default_priority = 0 })
 
+  local text_i = require("luasnip-latex-snippets/text_i").retrieve(not_math)
+  ls.add_snippets("tex", text_i, { default_priority = 0})
 
 
 
