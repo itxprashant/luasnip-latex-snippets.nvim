@@ -40,7 +40,7 @@ return {
   s({ trig = "([A-Za-ce-z\\]+)(d+)ot", wordTrig = false, regTrig = true, name = "dot", priority = 100, },
     f(function(_, snip) return string.format("\\%sot{%s}", snip.captures[2], snip.captures[1]) end, {})),
 
-  s({ trig = "\\?(o?)(i-)nt", wordTrig = false, regTrig = true, name = "dot", priority = 1000, },
+  s({ trig = "\\?(o?)(i-)nt", wordTrig = true, regTrig = true, name = "int", priority = 1000, },
     f(function(_, snip) return string.format("\\%s%snt", snip.captures[1], snip.captures[2]) end, {})),
     
   s(
@@ -252,8 +252,8 @@ return {
   s({ trig = "hat", name = "hat", priority = 10 }, fmta("\\hat{<>}", { i(1) })),
   s({ trig = "bar", name = "hat", priority = 10 }, fmta("\\overline{<>}", { i(1) })),
   s({ trig = "inf", name = "\\infty" }, t("\\infty")),
-  s({ trig = "inn", name = "in" }, t("\\in")),
-  s({ trig = "nin", name = "not in" }, t("\\notin")),
+  s({ trig = "inn", name = "in" }, t("\\in ")),
+  s({ trig = "nin", name = "not in", wordTrig = true }, t("\\notin ")),
   s({ trig = "neq", name = "not equal to" }, t("\\neq ")),
   s({ trig = "pm", name = "plus-minus" }, t("\\pm ")),
   s({ trig = "mp", name = "minus-plus" }, t("\\mp ")),
