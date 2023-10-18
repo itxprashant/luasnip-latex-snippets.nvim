@@ -25,6 +25,7 @@ Can be installed like any neovim plugin. If using lazy.nvim:
   config = function()
     require'luasnip-latex-snippets'.setup({use_treesitter = true})
     -- or setup({ use_treesitter = true })
+    require("luasnip").config.setup { enable_autosnippets = true }
   end,
   ft = {"tex", "markdown"},
 }
