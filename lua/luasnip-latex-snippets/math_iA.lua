@@ -40,8 +40,8 @@ return {
   s({ trig = "([A-Za-ce-z\\]+)(d+)ot", wordTrig = false, regTrig = true, name = "dot", priority = 100, },
     f(function(_, snip) return string.format("\\%sot{%s}", snip.captures[2], snip.captures[1]) end, {})),
 
-  s({ trig = "\\?(o?)(i-)nt", wordTrig = true, regTrig = true, name = "int", priority = 1000, },
-    f(function(_, snip) return string.format("\\%s%snt", snip.captures[1], snip.captures[2]) end, {})),
+  s({ trig = "\\?(o?)(i-)int", wordTrig = true, regTrig = true, name = "int", priority = 1000, },
+    f(function(_, snip) return string.format("\\%s%sint", snip.captures[1], snip.captures[2]) end, {})),
     
   s(
     {
