@@ -1,12 +1,10 @@
 local utils = require("luasnip-latex-snippets.util.utils")
 local pipe = utils.pipe
-local no_backslash = utils.no_backslash
+-- local no_backslash = utils.no_backslash
 
 local M = {}
 
-local default_opts = {
-  use_treesitter = false,
-}
+local default_opts = { use_treesitter = true }
 
 M.setup = function(opts)
   opts = vim.tbl_deep_extend("force", default_opts, opts or {})
@@ -36,26 +34,14 @@ end
 local _autosnippets = function(is_math, not_math)
   local autosnippets = {}
 
-  for _, s in ipairs({
-    "math_rA_no_backslash",
-    "math_iA",
-    "math_wrA",
-    "chemistry_iA"
-  }) do
-    vim.list_extend(
-      autosnippets,
-      require(("luasnip-latex-snippets.%s"):format(s)).retrieve(is_math)
-    )
+  for _, s in ipairs({ "math_rA_no_backslash", "math_iA", "math_wrA", "chemistry_iA" })
+  do
+    vim.list_extend(autosnippets, require(("luasnip-latex-snippets.%s"):format(s)).retrieve(is_math))
   end
 
-  for _, s in ipairs({
-    "wA",
-    "bwA",
-  }) do
-    vim.list_extend(
-      autosnippets,
-      require(("luasnip-latex-snippets.%s"):format(s)).retrieve(not_math)
-    )
+  for _, s in ipairs({ "wA", "bwA", })
+  do
+    vim.list_extend(autosnippets, require(("luasnip-latex-snippets.%s"):format(s)).retrieve(not_math))
   end
 
   return autosnippets
@@ -63,39 +49,16 @@ end
 
 M.setup_tex = function(is_math, not_math)
   local ls = require("luasnip")
-  ls.add_snippets("tex", {
-    ls.parser.parse_snippet(
-      { trig = "pac", name = "Package" },
-      "\\usepackage[${1:options}]{${2:package}}$0"
-    ),
 
-    -- ls.parser.parse_snippet({ trig = "nn", name = "Tikz node" }, {
-    --   "$0",
-    --   -- "\\node[$5] (${1/[^0-9a-zA-Z]//g}${2}) ${3:at (${4:0,0}) }{$${1}$};",
-    --   "\\node[$5] (${1}${2}) ${3:at (${4:0,0}) }{$${1}$};",
-    -- }),
-  })
+  ls.add_snippets("tex", require("luasnip-latex-snippets/math_i").retrieve(is_math), { default_priority = 0 })
+  ls.add_snippets("tex", require("luasnip-latex-snippets/chemistry_i").retrieve(is_math), { default_priority = 0 })
+  ls.add_snippets("tex", require("luasnip-latex-snippets/text_i").retrieve(not_math), { default_priority = 0 })
 
-  local math_i = require("luasnip-latex-snippets/math_i").retrieve(is_math)
-  ls.add_snippets("tex", math_i, { default_priority = 0 })
-
-  local chemistry_i = require("luasnip-latex-snippets/chemistry_i").retrieve(is_math)
-  ls.add_snippets("tex", chemistry_i, { default_priority = 0 })
-
-  local text_i = require("luasnip-latex-snippets/text_i").retrieve(not_math)
-  ls.add_snippets("tex", text_i, { default_priority = 0})
-
-
-
-  ls.add_snippets("tex", _autosnippets(is_math, not_math), {
-    type = "autosnippets",
-    default_priority = 0,
-  })
+  ls.add_snippets("tex", _autosnippets(is_math, not_math), { type = "autosnippets", default_priority = 0, })
 end
 
 M.setup_markdown = function()
   local ls = require("luasnip")
-
   local is_math = utils.with_opts(utils.is_math, true)
   local not_math = utils.with_opts(utils.not_math, true)
 
@@ -105,10 +68,7 @@ M.setup_markdown = function()
   end
 
   local to_filter = {}
-  for _, str in ipairs({
-    "wA",
-    "bwA",
-  }) do
+  for _, str in ipairs({ "wA", "bwA", }) do
     local t = require(("luasnip-latex-snippets.%s"):format(str)).retrieve(not_math)
     vim.list_extend(to_filter, vim.tbl_map(trigger_of_snip, t))
   end
@@ -117,21 +77,19 @@ M.setup_markdown = function()
     return not vim.tbl_contains(to_filter, s.trigger)
   end, autosnippets)
 
-  local parse_snippet = ls.extend_decorator.apply(ls.parser.parse_snippet, {
-    condition = pipe({ not_math }),
-  }) --[[@as function]]
-
-  -- tex delimiters
+  -- math-mode delimiters
   local normal_wA_tex = {
-    parse_snippet({ trig = "fm", name = "Math" }, "$${1:${TM_SELECTED_TEXT}}$"),
-    parse_snippet({ trig = "dm", name = "Block Math" }, "$$\n\t${1:${TM_SELECTED_TEXT}}\n.$$"),
+    ls.parser.parse_snippet({ trig = "fm", name = "Math", condition = pipe({ not_math }), }, "$${1:${TM_SELECTED_TEXT}}$"),
+    ls.parser.parse_snippet({ trig = "dm", name = "Block Math", condition = pipe({ not_math }), },
+      "$$\n\t${1:${TM_SELECTED_TEXT}}\n$$"),
   }
   vim.list_extend(filtered, normal_wA_tex)
 
-  ls.add_snippets("markdown", filtered, {
-    type = "autosnippets",
-    default_priority = 0,
-  })
+
+  ls.add_snippets("markdown", filtered, { type = "autosnippets", default_priority = 0, })
+
+  ls.add_snippets("markdown", require("luasnip-latex-snippets/math_i").retrieve(is_math), { default_priority = 0 })
+  ls.add_snippets("markdown", require("luasnip-latex-snippets/chemistry_i").retrieve(is_math), { default_priority = 0 })
 end
 
 return M
