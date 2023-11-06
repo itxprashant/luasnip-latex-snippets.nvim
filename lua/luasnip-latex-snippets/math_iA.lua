@@ -203,6 +203,7 @@ return {
   s({ trig = "mcal", name = "mathcal" }, fmta("\\mathcal{<>}<>", { i(1), i(2) })),
   s({ trig = "set", name = "set" }, fmta("\\{<>\\}", { i(1) })),
   s({ trig = "//", name = "Fraction" }, fmta("\\frac{<>}{<>}<>", { i(1), i(2), i(3) })),
+  s({ trig = "fr", name = "Fraction", wordTrig = true }, fmta("\\frac{<>}{<>}<>", { i(1), i(2), i(3) })),
   s({ trig = "\\\\\\", name = "setminus" }, t("\\setminus")),
   s({ trig = "too", name = "to" }, t("\\to ")),
   s({ trig = "ncr", name = "comb" }, fmta("{}^{<>}C_{<>}<> ", { i(1, "n"), i(2, "r"), i(3) })),
@@ -273,6 +274,8 @@ return {
   s({ trig = "\\?star", name = "star", regTrig = true }, t("\\star")),
   s({ trig = "\\?perp", name = "perp", regTrig = true }, t("\\perp")),
   s({ trig = "\\?subset", name = "subset", regTrig = true }, t("\\subset")),
+  s({ trig = "\\?sum", name = "sum", regTrig = true }, t("\\sum")),
+  s({ trig = "\\?prod", name = "prod", regTrig = true }, t("\\prod")),
 
 
 
