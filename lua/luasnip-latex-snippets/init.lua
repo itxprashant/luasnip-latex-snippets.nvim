@@ -78,7 +78,7 @@ M.setup_markdown = function()
 
   ls.add_snippets("markdown", filtered, { type = "autosnippets", default_priority = 0, })
 
-  for _, str in ipairs({ "math_i", "chemistry_i", }) do
+  for _, str in ipairs({ "math_i", "chemistry_i", "text_i_md" }) do
     ls.add_snippets("markdown", require(("luasnip-latex-snippets.%s"):format(str)).retrieve(is_math), { default_priority = 0 })
   end
 
