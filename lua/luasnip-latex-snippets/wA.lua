@@ -23,11 +23,7 @@ function M.retrieve(not_math)
   ),
   ls.parser.parse_snippet(
     { trig = "dm", name = "Block Math" },
-    "\\[\n\t${1:${TM_SELECTED_TEXT}}\n\\] $0"
-  ),
-  ls.parser.parse_snippet(
-    { trig = "dgm", name = "Block Math $" },
-    "$$\n\t${1:${TM_SELECTED_TEXT}}\n$$ $0"
+    "\\[\n${1:${TM_SELECTED_TEXT}}\n\\] $0"
   ),
 
   ls.parser.parse_snippet(

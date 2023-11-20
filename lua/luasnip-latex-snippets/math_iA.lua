@@ -26,7 +26,7 @@ return {
     fmta("<>_<>", {f(function(_, snip) return snip.captures[1] end), f(function(_, snip) return snip.captures[2] end)})),
 
   -- fraction
-  s({ trig = "([^/= ]+)/", wordTrig = false, regTrig = true, name = "fraction", priority = 500},
+  s({ trig = "([^/= \t]+)/", wordTrig = false, regTrig = true, name = "fraction", priority = 500},
     fmta("\\frac{<>}{<>}", {f(function(_, snip) return snip.captures[1] end, {}), i(1), })),
 
   -- Sequences
@@ -42,33 +42,17 @@ return {
 
   s({ trig = "\\?(o?)(i-)int", wordTrig = true, regTrig = true, name = "int", priority = 1000, },
     f(function(_, snip) return string.format("\\%s%sint", snip.captures[1], snip.captures[2]) end, {})),
-    
-  s(
-    {
-      trig = "dif_?([0-9]?)([a-zA-Z])([a-zA-Z])",
-      wordTrig = false,
-      regTrig = true,
-      name = "quick differentiation",
-      priority = 500,
-    },
+
+  s({
+      trig = "dif_?([0-9]?)([a-zA-Z])([a-zA-Z])", wordTrig = false, regTrig = true, name = "quick differentiation", priority = 500,},
     f(function(_, snip)
-      if snip.captures[1] == "" then
-        return string.format(
-          "\\frac{\\mathrm{d}%s}{\\mathrm{d}%s}",
-          snip.captures[2],
-          snip.captures[3]
-        )
+        if snip.captures[1] == "" then
+        return string.format("\\frac{\\mathrm{d}%s}{\\mathrm{d}%s}", snip.captures[2], snip.captures[3])
       else
-        return string.format(
-          "\\frac{\\mathrm{d}^{%s}%s}{\\mathrm{d}%s^{%s}}",
-          snip.captures[1],
-          snip.captures[2],
-          snip.captures[3],
-          snip.captures[1]
-        )
+        return string.format("\\frac{\\mathrm{d}^{%s}%s}{\\mathrm{d}%s^{%s}}",
+            snip.captures[1], snip.captures[2], snip.captures[3], snip.captures[1])
       end
-    end, {})
-  ),
+    end, {})),
 
   s(
     {
@@ -154,17 +138,10 @@ return {
     { trig = "hat", name = "unit vector prefix", priority = 100 },
     fmta("\\hat{<>}<>", { i(1), i(2) })
   ),
-  s({
-    trig = "([A-Z]?[A-Za-z])(hat)",
-    wordTrig = false,
-    regTrig = true,
-    name = "unit vector postfix",
-    priority = 2000,
-  }, {
-    f(function(_, snip)
+  s({ trig = "([A-Z]?[A-Za-z])(hat)", wordTrig = false, regTrig = true, name = "unit vector postfix", priority = 2000,},
+    { f(function(_, snip)
       return string.format("\\hat{%s}", snip.captures[1])
-    end, {}),
-  }),
+    end, {}),}),
 
   s({ trig = "(\\[^ {}]+)(hat)", wordTrig = false, regTrig = true, name = "unit vector postfix greek", priority = 3000,},
     { f(function(_, snip) return string.format("\\hat{%s}", snip.captures[1]) end, {}), }),
@@ -229,7 +206,7 @@ return {
   s({ trig = "II", name = "I" }, t("\\mathbb{I}")),
   s({ trig = "||", name = "mid" }, t(" \\mid ")),
   s({ trig = "Nn", name = "cap" }, t("\\cap ")),
-  s({ trig = "bmat", name = "bmat" }, fmta("\\begin{bmatrix} <> \\end{bmatrix}", { i(1) })),
+  -- s({ trig = "bmat", name = "bmat" }, fmta("\\begin{bmatrix} <> \\end{bmatrix}", { i(1) })),
   s({ trig = "uuu", name = "bigcup" }, fmta("\\bigcup_{<> \\in <>} ", { i(1, "i"), i(2, "I") })),
   s({ trig = "DD", name = "D" }, t("\\mathbb{D}")),
   s({ trig = "HH", name = "H" }, t("\\mathbb{H}")),
@@ -238,6 +215,7 @@ return {
   s({ trig = "==", name = "equals" }, fmta("&= <> \\\\", { i(1) })),
   s({ trig = "!=", name = "not equals" }, t("\\neq ")),
   s({ trig = "__", name = "subscript" }, fmta("_{<>}", { i(1) })),
+  s({ trig = "^^", name = "superscript" }, fmta("^{<>}", { i(1) })),
   s({ trig = "=>", name = "implies" }, t("\\implies ")),
   s({ trig = "=<", name = "implied by" }, t("\\impliedby ")),
   s({ trig = "<<", name = "<<" }, t("\\ll")),
@@ -280,49 +258,49 @@ return {
 
 
   -- Greek Letters
-  s(";a", t("\\alpha")),
-  s(";b", t("\\beta")),
-  s(";c", t("\\chi")),
-  s(";d", t("\\delta")),
-  s(";ep", t("\\epsilon")),
-  s(";g", t("\\gamma")),
-  s(";i", t("\\iota")),
-  s(";k", t("\\kappa")),
-  s(";l", t("\\lambda")),
-  s(";m", t("\\mu")),
-  s(";n", t("\\nu")),
-  s(";o", t("\\omega")),
-  s({trig = ";?pi", regTrig = true}, t("\\pi")),
-  s(";ph", t("\\phi")),
-  s(";ps", t("\\psi")),
-  s(";r", t("\\rho")),
-  s(";si", t("\\sigma")),
-  s(";ta", t("\\tau")),
-  s(";th", t("\\theta")),
-  s(";z", t("\\zeta")),
-  s(";et", t("\\eta")),
+  s(",a", t("\\alpha")),
+  s(",b", t("\\beta")),
+  s(",c", t("\\chi")),
+  s(",d", t("\\delta")),
+  s(",ep", t("\\epsilon")),
+  s(",g", t("\\gamma")),
+  s(",i", t("\\iota")),
+  s(",k", t("\\kappa")),
+  s(",l", t("\\lambda")),
+  s(",m", t("\\mu")),
+  s(",n", t("\\nu")),
+  s(",o", t("\\omega")),
+  s({trig = ",?pi", regTrig = true}, t("\\pi")),
+  s(",ph", t("\\phi")),
+  s(",ps", t("\\psi")),
+  s(",r", t("\\rho")),
+  s(",si", t("\\sigma")),
+  s(",ta", t("\\tau")),
+  s(",th", t("\\theta")),
+  s(",z", t("\\zeta")),
+  s(",et", t("\\eta")),
 
-  s(";A", t("\\Alpha")),
-  s(";B", t("\\Beta")),
-  s(";C", t("\\Chi")),
-  s(";D", t("\\Delta")),
-  s(";Ep", t("\\Epsilon")),
-  s(";G", t("\\Gamma")),
-  s(";I", t("\\Iota")),
-  s(";K", t("\\Kappa")),
-  s(";L", t("\\Lambda")),
-  s(";M", t("\\Mu")),
-  s(";N", t("\\Nu")),
-  s(";O", t("\\Omega")),
-  s({trig = ";?Pi", regTrig = true}, t("\\Pi")),
-  s(";Ph", t("\\Phi")),
-  s(";Ps", t("\\Psi")),
-  s(";R", t("\\Rho")),
-  s(";Si", t("\\Sigma")),
-  s(";Ta", t("\\Tau")),
-  s(";Th", t("\\Theta")),
-  s(";Z", t("\\Zeta")),
-  s(";Et", t("\\Eta")),
+  s(",A", t("\\Alpha")),
+  s(",B", t("\\Beta")),
+  s(",C", t("\\Chi")),
+  s(",D", t("\\Delta")),
+  s(",Ep", t("\\Epsilon")),
+  s(",G", t("\\Gamma")),
+  s(",I", t("\\Iota")),
+  s(",K", t("\\Kappa")),
+  s(",L", t("\\Lambda")),
+  s(",M", t("\\Mu")),
+  s(",N", t("\\Nu")),
+  s(",O", t("\\Omega")),
+  s({trig = ",?Pi", regTrig = true}, t("\\Pi")),
+  s(",Ph", t("\\Phi")),
+  s(",Ps", t("\\Psi")),
+  s(",R", t("\\Rho")),
+  s(",Si", t("\\Sigma")),
+  s(",Ta", t("\\Tau")),
+  s(",Th", t("\\Theta")),
+  s(",Z", t("\\Zeta")),
+  s(",Et", t("\\Eta")),
 }
 
 end

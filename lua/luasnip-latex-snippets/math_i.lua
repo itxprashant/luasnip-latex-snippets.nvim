@@ -19,6 +19,7 @@ function M.retrieve(is_math)
   return {
 
   s({trig = "dsp", name = "display-style"}, t("\\displaystyle ")),
+  s({trig = "stk", name = "substack"}, fmta("\\substack{<> \\\\  <>}", {i(1), i(2)})),
 
   s({ trig = "cases", name = "cases" }, fmta("\\begin{cases}\n <> \\\\ \n\\end{cases}\n", { i(1) })),
 
@@ -39,7 +40,7 @@ function M.retrieve(is_math)
   s({ trig = "\\?sum", name = "sum", regTrig = true }, fmta("\\sum_{<>}^{<>} <>", { i(1), i(2, "\\infty"), i(3) })),
   s({ trig = "\\?prod", name = "prod", regTrig = true }, fmta("\\prod_{<>}^{<>} <>", { i(1), i(2), i(3) })),
 
-  s({ trig = "\\?lim", name = "limit", regTrig = true }, fmta("\\lim_{<> \\to <>} ", { i(1), i(2, "\\infty") })),
+  s({ trig = "\\?lim", name = "limit", regTrig = true }, fmta("\\lim_{<>} ", { i(1) })),
   s({ trig = "\\?limsup", name = "limit-super", regTrig = true }, fmta("\\limsup_{<> \\to <>} ", { i(1), i(2, "\\infty") })),
 
   ls.parser.parse_snippet({ trig = "taylor", name = "taylor" }, "\\sum_{${1:k}=${2:0}}^{${3:\\infty}} ${4:c_$1} (x-a)^$1 $0"),

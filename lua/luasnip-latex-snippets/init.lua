@@ -73,12 +73,12 @@ M.setup_markdown = function()
     return not vim.tbl_contains(to_filter, s.trigger)
   end, autosnippets)
 
-  vim.list_extend(filtered, require("luasnip-latex-snippets/wA_md").retrieve(not_math))
+  vim.list_extend(filtered, require("luasnip-latex-snippets/markdown/wA_md").retrieve(not_math))
 
 
   ls.add_snippets("markdown", filtered, { type = "autosnippets", default_priority = 0, })
 
-  for _, str in ipairs({ "math_i", "chemistry_i", "text_i_md" }) do
+  for _, str in ipairs({ "math_i", "chemistry_i", "markdown/text_i_md" }) do
     ls.add_snippets("markdown", require(("luasnip-latex-snippets.%s"):format(str)).retrieve(is_math), { default_priority = 0 })
   end
 

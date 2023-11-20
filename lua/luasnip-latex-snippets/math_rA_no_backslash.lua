@@ -50,11 +50,7 @@ function M.retrieve(is_math)
   local pipe = utils.pipe
   local no_backslash = utils.no_backslash
 
-  M.decorator = {
-    wordTrig = false,
-    trigEngine = "pattern",
-    condition = pipe({ is_math, no_backslash }),
-  }
+  M.decorator = {wordTrig = false, trigEngine = "pattern", condition = pipe({ is_math, no_backslash }),}
 
   s = ls.extend_decorator.apply(ls.snippet, M.decorator) --[[@as function]]
 
