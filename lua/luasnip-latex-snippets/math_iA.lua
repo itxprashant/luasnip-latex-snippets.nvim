@@ -111,19 +111,16 @@ return {
 
   -- Vector postfix
   s({ trig = "vec", name = "vector prefix", priority = 100 }, fmta("\\vec{<>}<>", { i(1), i(2) })),
-  s({
-    trig = "([A-Z]?[A-Za-z])(,%.)",
-    wordTrig = false,
-    regTrig = true,
-    name = "vector postfix",
-    priority = 2000,
-  }, {
+  s({ trig = "([A-Za-z])(,%.)", wordTrig = false, regTrig = true, name = "vector postfix", priority = 2000, }, {
     f(function(_, snip)
       return string.format("\\vec{%s}", snip.captures[1])
-    end, {}),
-  }),
+    end, {}),}),
+  s({ trig = "([A-Z][A-Za-z])(,%.)", wordTrig = false, regTrig = true, name = "vector postfix", priority = 2001, }, {
+    f(function(_, snip)
+      return string.format("\\overrightarrow{%s}", snip.captures[1])
+    end, {}),}),
   s({
-    trig = "(\\[^ {}]+)(,%.)",
+    trig = "(\\[A-Za-z]+)(,%.)",
     wordTrig = false,
     regTrig = true,
     name = "vector postfix greek",
@@ -234,8 +231,8 @@ return {
   s({ trig = "inn", name = "in" }, t("\\in ")),
   s({ trig = "nin", name = "not in", wordTrig = true }, t("\\notin ")),
   s({ trig = "neq", name = "not equal to" }, t("\\neq ")),
-  s({ trig = "pm", name = "plus-minus" }, t("\\pm ")),
-  s({ trig = "mp", name = "minus-plus" }, t("\\mp ")),
+  s({ trig = "pm ", name = "plus-minus" }, t("\\pm ")),
+  s({ trig = "mp ", name = "minus-plus" }, t("\\mp ")),
   s({ trig = "SI", name = "SI" }, fmta("\\SI{<>}{<>}", { i(1), i(2) })),
   s({ trig = "det", name = "\\det"}, t("\\det ")),
 
@@ -262,7 +259,8 @@ return {
   s(",b", t("\\beta")),
   s(",c", t("\\chi")),
   s(",d", t("\\delta")),
-  s(",ep", t("\\epsilon")),
+  s(",e", t("\\epsilon")),
+  s(",h", t("\\eta")),
   s(",g", t("\\gamma")),
   s(",i", t("\\iota")),
   s(",k", t("\\kappa")),
@@ -270,21 +268,23 @@ return {
   s(",m", t("\\mu")),
   s(",n", t("\\nu")),
   s(",o", t("\\omega")),
-  s({trig = ",?pi", regTrig = true}, t("\\pi")),
-  s(",ph", t("\\phi")),
-  s(",ps", t("\\psi")),
+  s(",p", t("\\pi")),
+  s(",f", t("\\phi")),
+  s(",v", t("\\psi")),
   s(",r", t("\\rho")),
-  s(",si", t("\\sigma")),
-  s(",ta", t("\\tau")),
-  s(",th", t("\\theta")),
+  s(",s", t("\\sigma")),
+  s(",t", t("\\tau")),
+  s(",q", t("\\theta")),
   s(",z", t("\\zeta")),
-  s(",et", t("\\eta")),
+  s(",x", t("\\xi")),
+  s(",u", t("\\upsilon")),
 
   s(",A", t("\\Alpha")),
   s(",B", t("\\Beta")),
   s(",C", t("\\Chi")),
   s(",D", t("\\Delta")),
-  s(",Ep", t("\\Epsilon")),
+  s(",E", t("\\Epsilon")),
+  s(",H", t("\\Eta")),
   s(",G", t("\\Gamma")),
   s(",I", t("\\Iota")),
   s(",K", t("\\Kappa")),
@@ -292,15 +292,16 @@ return {
   s(",M", t("\\Mu")),
   s(",N", t("\\Nu")),
   s(",O", t("\\Omega")),
-  s({trig = ",?Pi", regTrig = true}, t("\\Pi")),
-  s(",Ph", t("\\Phi")),
-  s(",Ps", t("\\Psi")),
+  s(",P", t("\\Pi")),
+  s(",F", t("\\Phi")),
+  s(",V", t("\\Psi")),
   s(",R", t("\\Rho")),
-  s(",Si", t("\\Sigma")),
-  s(",Ta", t("\\Tau")),
-  s(",Th", t("\\Theta")),
+  s(",S", t("\\Sigma")),
+  s(",T", t("\\Tau")),
+  s(",Q", t("\\Theta")),
   s(",Z", t("\\Zeta")),
-  s(",Et", t("\\Eta")),
+  s(",X", t("\\Xi")),
+  s(",U", t("\\Upsilon")),
 }
 
 end
