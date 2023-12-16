@@ -57,6 +57,12 @@ function M.retrieve(is_math)
   parse_snippet({ trig = "cyclobutane", name = "cyclobutane" }, "*4(----)"),
   parse_snippet({ trig = "cyclopentane", name = "cyclopentane" }, "*5(-----)"),
   parse_snippet({ trig = "cyclohexane", name = "cyclohexane" }, "*6(------)"),
+
+  -- Biomolecules
+  parse_snippet({ trig = "glucose", name = "Glucose(Fischer)"},
+      "[2,0.8]CH_2OH-(-[0]OH)(-[4]H)-(-[0]OH)(-[4]H)-(-[4]OH)(-[0]H)-(-[0]OH)(-[4]H)-CHO"),
+  parse_snippet({ trig = "fructose", name = "Fructose(Fischer)"},
+      "[2,0.8]CH_2OH-(-[0]OH)(-[4]H)-(-[0]OH)(-[4]H)-(-[4]OH)(-[0]H)-C(=[0]O)-CH_2OH"),
   }
 
 end

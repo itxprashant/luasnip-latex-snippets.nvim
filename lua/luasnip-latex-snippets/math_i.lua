@@ -29,8 +29,8 @@ function M.retrieve(is_math)
   s({ trig = "dif_?([0-9])", name = "higher differentiation", regTrig = true }, fmta("\\frac{\\mathrm{d}^{<>} <>}{\\mathrm{d} <>^{<>}}<>",
     { f(function(_, snip) return snip.captures[1] end), i(1), i(2), f(function(_, snip) return snip.captures[1] end), i(3), })),
 
-  s({ trig = "par", name = "partial differentiation" }, fmta("\\frac{\\partial <>}{\\partial <>}<>", { i(1), i(2), i(3) })),
-  s({ trig = "par_?([0-9])", name = "higher partial differentiation", regTrig = true }, fmta("\\frac{\\partial^{<>} <>}{\\partial <>^{<>}}<>", {
+  s({ trig = "\\?par", name = "partial differentiation" }, fmta("\\frac{\\partial <>}{\\partial <>}<>", { i(1), i(2), i(3) })),
+  s({ trig = "\\?par_?([0-9])", name = "higher partial differentiation", regTrig = true }, fmta("\\frac{\\partial^{<>} <>}{\\partial <>^{<>}}<>", {
       f(function(_, snip) return snip.captures[1] end), i(1), i(2), f(function(_, snip) return snip.captures[1] end), i(3), })),
 
   s({ trig = "\\?int", name = "int", regTrig = true },c(1,

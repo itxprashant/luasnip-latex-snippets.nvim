@@ -4,7 +4,7 @@ local ls = require("luasnip")
 
 local M = {}
 
-local default_opts = { use_treesitter = true }
+local default_opts = { use_treesitter = false }
 
 M.setup = function(opts)
   opts = vim.tbl_deep_extend("force", default_opts, opts or {})
@@ -26,6 +26,7 @@ M.setup = function(opts)
       M.setup_markdown()
     end,
   })
+
 end
 
 local _autosnippets = function(is_math, not_math)
@@ -83,5 +84,6 @@ M.setup_markdown = function()
   end
 
 end
+
 
 return M

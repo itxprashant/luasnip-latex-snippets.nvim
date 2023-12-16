@@ -22,6 +22,10 @@ function M.retrieve(not_math)
     "\\( ${1:${TM_SELECTED_TEXT}} \\)$0"
   ),
   ls.parser.parse_snippet(
+    { trig = "fM", name = "Inline Math (Display Style)" },
+    "\\(\\displaystyle ${1:${TM_SELECTED_TEXT}} \\)$0"
+  ),
+  ls.parser.parse_snippet(
     { trig = "dm", name = "Block Math" },
     "\\[\n${1:${TM_SELECTED_TEXT}}\n\\] $0"
   ),
