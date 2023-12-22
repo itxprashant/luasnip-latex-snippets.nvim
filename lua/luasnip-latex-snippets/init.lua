@@ -27,6 +27,13 @@ M.setup = function(opts)
     end,
   })
 
+
+ vim.api.nvim_create_autocmd("FileType", { pattern = "org",   group = augroup, once = true,
+    callback = function()
+      M.setup_org()
+    end,
+  })
+
 end
 
 local _autosnippets = function(is_math, not_math)
@@ -74,16 +81,48 @@ M.setup_markdown = function()
     return not vim.tbl_contains(to_filter, s.trigger)
   end, autosnippets)
 
-  vim.list_extend(filtered, require("luasnip-latex-snippets/markdown/wA_md").retrieve(not_math))
+  vim.list_extend(filtered, require("luasnip-latex-snippets/fts/wA_md").retrieve(not_math))
 
 
   ls.add_snippets("markdown", filtered, { type = "autosnippets", default_priority = 0, })
 
-  for _, str in ipairs({ "math_i", "chemistry_i", "markdown/text_i_md" }) do
+  for _, str in ipairs({ "math_i", "chemistry_i", "fts/text_i_md" }) do
     ls.add_snippets("markdown", require(("luasnip-latex-snippets.%s"):format(str)).retrieve(is_math), { default_priority = 0 })
   end
 
 end
+
+
+M.setup_org = function()
+  local is_math = utils.with_opts(utils.is_math, true)
+  local not_math = utils.with_opts(utils.not_math, true)
+
+  local autosnippets = _autosnippets(is_math, not_math)
+  local trigger_of_snip = function(s)
+    return s.trigger
+  end
+
+  local to_filter = {}
+  for _, str in ipairs({ "wA", "bwA", }) do
+    local t = require(("luasnip-latex-snippets.%s"):format(str)).retrieve(not_math)
+    vim.list_extend(to_filter, vim.tbl_map(trigger_of_snip, t))
+  end
+
+  local filtered = vim.tbl_filter(function(s)
+    return not vim.tbl_contains(to_filter, s.trigger)
+  end, autosnippets)
+
+  vim.list_extend(filtered, require("luasnip-latex-snippets/fts/wA_org").retrieve(not_math))
+
+
+  ls.add_snippets("org", filtered, { type = "autosnippets", default_priority = 0, })
+
+  for _, str in ipairs({ "math_i", "chemistry_i", "fts/text_i_org" }) do
+    ls.add_snippets("org", require(("luasnip-latex-snippets.%s"):format(str)).retrieve(is_math), { default_priority = 0 })
+  end
+
+end
+
 
 
 return M
